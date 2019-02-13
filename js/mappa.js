@@ -16,6 +16,7 @@ var OSTACOLO=3;
 var SFONDO = 0;
 var ARMA=2;
 var GROTTA=5;
+var FUNGO = 10;
 
 var omino = "omino";
 var ominoConSpada = "ominoConSpada";
@@ -50,7 +51,8 @@ for (var i=0; i<R; i++) {
 }
 
 // posizionamento di un ostacolo per esempio
-piano[4][4] = OSTACOLO;
+//piano[4][4] = OSTACOLO;
+//piano[3][2]= FUNGO;
 
 function mostraMatriceHTML(){
 	var s = "";
@@ -91,6 +93,11 @@ function generaGrotta(){
 		cont++;
 	}
 }
+
+function generaFungo(){
+	generaOggetto(FUNGO);
+}
+
 
 function generaOggetto(valOggetto){
 	// si genera un indice di riga casuale tra 0 e R

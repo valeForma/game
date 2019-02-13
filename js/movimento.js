@@ -67,7 +67,12 @@ function controllaCella(x, y) {
     switch (piano[x][y]) {
         case OSTACOLO:
             return false;
-        case PILLOLA:
+        case FUNGO:
+		energia = energia - 5;
+		document.getElementById("energia").innerHTML=energia;
+		piano[x][y] = SFONDO;
+		return true;
+		case PILLOLA:
             energia = energia + DELTA_ENERGIA;
             document.getElementById("energia").innerHTML = energia;
             piano[x][y] = SFONDO;
