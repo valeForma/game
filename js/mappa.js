@@ -15,7 +15,7 @@ var DELTA_ENERGIA = 20;
 var OSTACOLO=3; 
 var SFONDO = 0;
 var ARMA=2;
-var PORTALE=5;
+var GROTTA=5;
 
 var omino = "omino";
 var ominoConSpada = "ominoConSpada";
@@ -32,10 +32,18 @@ var R = 10;
 var C = 20; 
 
 // definizione id matrice, come array di array
-var piano = new Array();
+var piano = [];
+
+var cont = 0;
+var posX1 = 0;
+var posY1 = 0;
+var posX2 = 0;
+var posY2 = 0;
+
+
 
 for (var i=0; i<R; i++) {
-	piano[i]=new Array(); // ogni riga contiene un array: si ha così una matrice
+	piano[i]=[]; // ogni riga contiene un array: si ha così una matrice
 	for (var j=0; j<C;j++){
 		piano[i][j]=SFONDO; // si assegna un valore di default a tutte le celle
 	}
@@ -77,6 +85,13 @@ function generaOstacolo(){
 	generaOggetto(OSTACOLO);
 }
 
+function generaGrotta(){
+	if(cont<2) {
+		generaOggetto(GROTTA);
+		cont++;
+	}
+}
+
 function generaOggetto(valOggetto){
 	// si genera un indice di riga casuale tra 0 e R
 	var r = Math.random(); 
@@ -86,6 +101,14 @@ function generaOggetto(valOggetto){
 	ry = Math.round( c * C);
 	// utilizzando rx e rc si ha una posizione casuale nel piano di gioco
 	piano[rx][ry] = valOggetto; //posiziona oggetto nella matrice
+	if(valOggetto===GROTTA)
+		if(cont === 0){
+			posX1=rx;
+			posY1=ry;
+		}else{
+			posX2=rx;
+			posY2=ry;
+		}
 	// in rx, ry c'è un nuovo valore quindi meglio ridisegnare la cella
 	disegnaCella(rx,ry);
 	
