@@ -5,6 +5,7 @@ var ominoY = 0;
 // posizione dell'arma
 var armaX = 9; 
 var armaY = 9;
+var armaZ = 9;
 
 // valore iniziale dell'energia
 var energia =0;
