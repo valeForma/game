@@ -16,6 +16,7 @@ var DELTA_ENERGIA = 20;
 var OSTACOLO=3; 
 var SFONDO = 0;
 var ARMA=2;
+var PORTALE=5;
 
 var omino = "omino";
 var ominoConSpada = "ominoConSpada";
