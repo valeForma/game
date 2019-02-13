@@ -3,6 +3,7 @@
 <head>
 <script type="text/javascript" src="js/mappa.js"></script>
 <script type="text/javascript" src="js/movimento.js"></script>
+<script type="text/javascript" src="js/cacciatore.js"></script>
 </head>
 <body onkeydown="checkKeyDown(event);" onkeypress="checkKeyPress(event)" >
 
@@ -225,10 +226,10 @@
 <input type="button" onClick="mostraMatriceHTML()"  value="mostra matrice" ></input>
 <input type="button" onClick="disegnaOmino()"       value="mostra omino" ></input>
 <input type="button" onClick="generaOstacolo()"       value="genera ostacolo" ></input>
-<input type="button" onClick="generaGrotta()"       value="genera grotta" ></input>
-
+<input type="button" onClick="generaCacciatore()"       value="genera cacciatore" ></input>
 
 <p id="posizioneOmino"></p>
+<p id="posizioneCacciatore"></p>
 <p id="messaggioDebug"></p>
 </body>
 </html>
