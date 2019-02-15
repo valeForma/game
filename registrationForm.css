@@ -1,0 +1,33 @@
+h2 {
+	text-align: center;
+	width: 100%;
+}
+
+.passwordWithPic{
+	position: relative;
+	margin: 3% auto;
+	width: 100%;
+	border: 3px solid green;
+}
+
+.passwordWithPic input {
+	border: none: background:#FFF;
+	display: block;
+	width: 100%;
+	box-sizing: border-box
+}
+
+.passwordWithPic img {
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	width: 1em;
+}
+
+.forButton
+{
+	position: relative;
+	margin: 5% auto;
+	width:100%;
+	text-align:center;
+}

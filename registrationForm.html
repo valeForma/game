@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>refistration form</title>
+<link rel="stylesheet" href="registrationForm.css">
+</head>
+<body>
+
+	<h2>REGISTRATION FORM</h2>
+	<form id="modulo" method="post" name="modulo">
+		<div class="passwordWithPic">
+			<input placeholder="Name" type="text" name="name" id="name" required>
+		</div>
+		<div class="passwordWithPic">
+			<input placeholder="Surname" type="text" name="surname" id="surname" required>
+		</div>
+		<div class="passwordWithPic">
+			<input placeholder="Date of birth" type="text" name="dateOfBirth" id="dateOfBirth" onfocus="changeToDate()" required>
+		</div>
+		<div class="passwordWithPic">
+			<input placeholder="Place of birth" type="text" name="placeOfBirth" id="placeOfBirth" required>
+		</div>
+		
+		
+<!-- 		AGGIUNGERE GENDER -->
+
+
+		<div class="passwordWithPic">
+    		<input maxlength="30" placeholder="Password" type="password" name="password" id="password"
+			 required> 
+   			<img id="passwordImg" onmouseout="makeBlind('password')" onmouseover="makeSeeable('password')" src="img1/openedEye.png" width=25 />
+		</div>
+		
+		<div class="passwordWithPic">
+    		<input maxlength="30" placeholder="Confirm Password" type="password" name="conferma" onblur="checkPasswords()" id="conferma" required>
+   			<img id="confermaImg" onmouseout="makeBlind('conferma')" onmouseover="makeSeeable('conferma')" src="img1/openedEye.png" width=25 />
+		</div>
+		<div class="forButton">
+			<input id="submitButton" type="submit" value="InviaOnClick">
+		</div>
+	</form>
+	
+
+	<script>
+	function changeToDate() {
+		var inputToChange = document.getElementById("dateOfBirth");
+		inputToChange.type = "date";
+	}
+	
+		function checkPasswords() {
+			var password = document.getElementById("modulo").password;
+			var conferma = document.getElementById("modulo").conferma;
+			if (password.value != conferma.value) {
+				var messaggio = "Password diverse";
+				conferma.setCustomValidity(messaggio);
+			}
+		}
+		
+		function makeSeeable(elementString) {
+		  var textPass = document.getElementById(elementString);
+		  if (textPass.type === "password") {
+			  textPass.type = "text";
+			  var imgPass = document.getElementById(elementString+"Img");
+			  imgPass.src="img1/closedEye.png";
+		  } 
+		}
+		
+		function makeBlind(elementString) {
+			  var textPass = document.getElementById(elementString);
+			  if (textPass.type === "text") {
+				  textPass.type = "password";
+				  var imgPass = document.getElementById(elementString+"Img");
+				  imgPass.src="img1/openedEye.png";
+			  }
+			}
+	</script>
+</body>
+</html>
