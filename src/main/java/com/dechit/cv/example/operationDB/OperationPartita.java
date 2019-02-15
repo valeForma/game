@@ -5,6 +5,7 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.query.Query;
 
 import java.util.Date;
+import java.util.List;
 
 @NamedQueries({
         @org.hibernate.annotations.NamedQuery(
@@ -26,25 +27,34 @@ import java.util.Date;
                 timeout = 1,
                 fetchSize = 10)
 })
-public abstract class OperationPartita extends OperationDB {
+public class OperationPartita extends OperationDB {
 
     public void add(int punteggio, String nickUtente, Date data) {
 
-        Query<Partita> query = currentSession.createNamedQuery("OperationPartita.add",Partita.class);
-        query.setParameter("nick",nickUtente);
-        query.setParameter("punteggio",punteggio);
-        query.setParameter("data",data);
+        Query<Partita> query = currentSession.createNamedQuery("OperationPartita.add", Partita.class);
+        query.setParameter("nick", nickUtente);
+        query.setParameter("punteggio", punteggio);
+        query.setParameter("data", data);
 
         query.getSingleResult();
 
     }
 
-    public Partita search() {
-        return null;
+    public Partita search(String nick) {
+
+        Query<Partita> query = currentSession.createNamedQuery("OperationPartita.search", Partita.class);
+        query.setParameter("nick", nick);
+
+        List<Partita> risultato = query.getResultList();
+
+        return (Partita) risultato;
     }
 
     @Override
     public Partita show() {
-        return null;
+        Query<Partita> query = currentSession.createNamedQuery("OperationPartita.show", Partita.class);
+        List<Partita> risultato = query.getResultList();
+
+        return (Partita) risultato;
     }
 }

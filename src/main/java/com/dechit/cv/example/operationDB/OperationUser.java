@@ -21,8 +21,7 @@ import java.util.List;
                         " u.codicefiscale= :cf," +
                         " u.nickutente= :nick," +
                         "u.password= :pass)",
-                timeout = 1,
-                fetchSize = 10),
+                timeout = 1),
         @org.hibernate.annotations.NamedQuery(
                 name = "OperationUser.search",
                 query = "FROM Utente u WHERE u.nickutente= :nick ",

@@ -27,7 +27,7 @@ public class Test {
 
         Date data = new Date();
         Partita p = new Partita(110, "Carmine", data);
-        Utente u = new Utente("carmine", "carmine", "U meghj", "root", "italy");
+        Utente u = new Utente();
         ClassificaGenerale c = new ClassificaGenerale(u,p,"miao");
 
 

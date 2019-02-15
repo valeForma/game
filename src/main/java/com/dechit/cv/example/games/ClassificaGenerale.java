@@ -19,6 +19,10 @@ public class ClassificaGenerale {
     @JoinColumn(name="nickUtente", referencedColumnName = "nickUtente")
     private Utente utente;
 
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "nazione", referencedColumnName = "paese")
+    private Utente nazione;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="punteggio", referencedColumnName = "punteggio",unique = false)
     private Partita punteggio;
@@ -31,10 +35,20 @@ public class ClassificaGenerale {
         // TODO Auto-generated constructor stub
     }
 
-    public ClassificaGenerale(Utente utente, Partita punteggio, String tipoDiGioco) {
+    public ClassificaGenerale(Utente utente, Utente nazione, Partita punteggio,
+                              String tipoDiGioco) {
         this.utente = utente;
+        this.nazione = nazione;
         this.punteggio = punteggio;
         this.tipoDiGioco = tipoDiGioco;
+    }
+
+    public Utente getNazione() {
+        return nazione;
+    }
+
+    public void setNazione(Utente nazione) {
+        this.nazione = nazione;
     }
 
     public Utente getUtente() {
