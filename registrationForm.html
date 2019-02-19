@@ -11,20 +11,20 @@
 		<form id="modulo" method="post" name="modulo">
 			<div class="passwordWithPic">
 				<input placeholder="Name" type="text" name="name" id="name"
-					autocomplete="off" required>
+					autocomplete="off" onblur="addBorderForValidity('name')" onfocus="checkIfAlreadyValid('name')" required>
 			</div>
 			<div class="passwordWithPic">
 				<input placeholder="Surname" type="text" name="surname" id="surname"
-					autocomplete="off" required>
+					autocomplete="off" onblur="addBorderForValidity('surname')" onfocus="checkIfAlreadyValid('surname')" required>
 			</div>
 			<div class="passwordWithPic">
 				<input placeholder="Date of birth" type="text" name="dateOfBirth"
-					id="dateOfBirth" onfocus="changeToDate()" autocomplete="off"
-					required>
+					id="dateOfBirth" onfocus="changeToDate()" autocomplete="off" onblur="addBorderForValidity('dateOfBirth')"
+					onfocus="checkIfAlreadyValid('dateOfBirth')" required>
 			</div>
 			<div class="passwordWithPic">
 				<input placeholder="Place of birth" type="text" name="placeOfBirth"
-					id="placeOfBirth" autocomplete="off" required>
+					onfocus="checkIfAlreadyValid('placeOfBirth')" id="placeOfBirth" autocomplete="off" onblur="addBorderForValidity('placeOfBirth')" required>
 			</div>
 
 			<!-- The radio buttons -->
@@ -39,7 +39,7 @@
 
 			<div class="passwordWithPic">
 				<input maxlength="30" placeholder="Password" type="password"
-					name="password" id="password" autocomplete="off" required>
+					name="password" id="password" onblur="checkPasswords('password')" autocomplete="off" required>
 				<img id="passwordImg" onmouseout="makeBlind('password')"
 					onmouseover="makeSeeable('password')"
 					onclick="makeSeeable('password')" src="img1/closedEye.png" />
@@ -47,7 +47,7 @@
 
 			<div class="passwordWithPic">
 				<input maxlength="30" placeholder="Confirm Password" type="password"
-					name="conferma" onblur="checkPasswords()" id="conferma"
+					name="conferma" onblur="checkPasswords('conferma')" id="conferma"
 					autocomplete="off" required> <img id="confermaImg"
 					onmouseout="makeBlind('conferma')"
 					onmouseover="makeSeeable('conferma')"
@@ -57,31 +57,77 @@
 				<input value="CODICE FISCALE (automatico)" type="text"
 					name="fiscalCode" id="fiscalCode" readonly>
 			</div>
-			
-				<input id="forButton" type="submit" value="Send form">
-				<input id="forButton" type="button" value="Calculate CF"
-					onclick="CalcolaCFOnClick()">
+				<input id="forButton" type="submit" name="sendForm" value="Send form">
+				<button id="forButton" name="calculateCF" value="Calculate CF"
+					onclick="CalcolaCFOnClick()"></button>
 		</form>
 	</div>
 
 
 	<script>
+	var validationNumber = 0;
 		function changeToDate() {
 			var inputToChange = document.getElementById("dateOfBirth");
-			inputToChange.type = "date";
+			if(inputToChange.type=="text")
+			{
+				inputToChange.type = "date";
+			}
+		}
+		
+		function checkIfAlreadyValid(element)
+		{
+			var elementTarget = document.getElementsByName(element)[0];
+			if(elementTarget.checkValidity())
+			{
+				elementTarget.isAlreadyValid=true;
+			}
+			else
+			{
+				elementTarget.isAlreadyValid=false;
+			}
+		}
+		
+		function addBorderForValidity(element)
+		{
+			var elementTarget = document.getElementsByName(element)[0];
+			var messaggioV = "Indispensabile per calcolo CF !";
+			if(elementTarget.value!=null && elementTarget.value!="")
+			{
+				if(elementTarget.checkValidity()==true)
+					{
+						if(elementTarget.isAlreadyValid==false)
+							validationNumber=validationNumber+1;
+					}
+				if(validationNumber==4)
+				{
+					var elementTarget = document.getElementsByName("calculateCF")[0];
+						alert("Edit the CF button with an animation");
+				}
+				elementTarget.setCustomValidity("");
+				elementTarget.style.border = "8px solid #008000";
+			}
+			else
+			{
+				if(elementTarget.checkValidity()==false)
+				{
+					if(elementTarget.isAlreadyValid==true)
+						validationNumber=validationNumber-1;
+				}
+				elementTarget.setCustomValidity(messaggioV);
+				elementTarget.style.border = "8px solid #FF0000";
+			}
 		}
 
-		function checkPasswords() {
-			var password = document.getElementById("modulo").password;
-			var conferma = document.getElementById("modulo").conferma;
+		function checkPasswords(element) {
+			var elementTarget = document.getElementsByName(element)[0];
 			if (password.value != conferma.value) {
-				alert(password.value + " " + conferma.value);
 				var messaggio = "Password diverse";
 				conferma.setCustomValidity(messaggio);
 				conferma.style.border = "8px solid #FF0000";
 			}
 				else{
 					conferma.setCustomValidity("");
+					conferma.style.border = "8px solid #008000";
 					}
 			}
 
@@ -106,7 +152,9 @@
 			
 		
 		function CalcolaCFOnClick()
-		{
+		{		
+			
+			//Calcolo codice fiscale
 			var CFisc={}
 
 			CFisc.tavola_mesi=['A','B','C','D','E','H','L','M','P','R','S','T']
@@ -8351,7 +8399,7 @@
 		    sesso,
 		    data[0],data[1],data[2],
 		    document.getElementById("modulo").placeOfBirth.value);
-		  	document.getElementById("modulo").fiscalCode.placeholder=codice.toUpperCase();
+		  	document.getElementById("modulo").fiscalCode.value=codice.toUpperCase();
 		}
 	</script>
 </body>
