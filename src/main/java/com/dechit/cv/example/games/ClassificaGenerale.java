@@ -1,11 +1,9 @@
-package com.dechit.cv.example.games;
+package main.java.com.dechit.cv.examplimport javax.persistence.*;
 
-import com.dechit.cv.example.match.Partita;
-import com.dechit.cv.example.user.Utente;
+e.games;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import main.java.com.dechit.cv.example.matc
+import main.java.com.dechit.cv.example.user.Utente;h.Partita;
 
 @Entity
 @Table(name = "classificagenerale")
