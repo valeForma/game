@@ -1,13 +1,21 @@
-body {
+.active{
+	background-color: #E8A90C!important;
+}
+
+body,html {
 	background-image: url("img1/backgroundForm.jpg");
 	font-weight: bold;
+	height: 100%;
+	margin:0;
+	padding:0;
 }
 
 h1 {
-	 text-decoration: underline overline dotted red;
+	text-decoration: underline overline dotted #E8A90C;
 	text-align: center;
+	font-size: 3em;
 	width: 100%;
-	color: red;
+	color: #E8A90C;
 }
 
 input:focus {
@@ -20,10 +28,11 @@ input:valid {
 }
 
 div#registration {
+	height:80%;
 	margin: 3% auto;
-	width: 50%;
+	width: 45%;
+	overflow-y:auto;
 	border-radius: 12px;
-	border: 8px solid #008000;
 	background-color: white;
 }
 
@@ -41,7 +50,7 @@ input {
 
 .passwordWithPic {
 	position: relative;
-	margin: 3% auto;
+	margin: 10% auto;
 	width: 60%;
 }
 
@@ -53,7 +62,7 @@ input {
 	background: #FFF;
 	display: block;
 	width: 100%;
-	heigth: 10%;
+	height: 6em;
 	box-sizing: border-box;
 }
 .passwordWithPic input:hover{
@@ -70,7 +79,7 @@ input {
 
 .passwordWithPic img {
 	position: absolute;
-	top: 35%;
+	top: 40%;
 	right: 5%;
 	width: 1em;
 }
@@ -85,6 +94,7 @@ input {
 	position: relative;
 	margin: 5% 7%;
 	width:35%;
+	height:5em;
 	text-align: center;
 }
 
@@ -101,18 +111,18 @@ input {
 	-moz-border-radius: 50px;
 	border-radius: 50px;
 	border: 8px solid green;
-	width: 57%;
+	width: 58%;
+	height: 3em;
 	margin: 3% auto;
 	padding: 0.55em 0;
 }
 
 .container {
 	position: relative;
-	padding-left: 30px;
-	text-align: right;
-	margin: 2% 15%;
-	width: 80%;
 	cursor: pointer;
+	padding-left:10%;
+	top: 25%;
+	margin-left:20%;
 	font-size: 1em;
 	color: gray;
 	-webkit-user-select: none;
@@ -141,10 +151,10 @@ input {
 /* Create a custom radio button */
 .checkmark {
 	position: absolute;
-	top: -20%;
-	left: -30%;
-	height: 25px;
-	width: 25px;
+	top: 5%;
+	left: -10%;
+	height: 20px;
+	width: 20px;
 	background-color: #eee;
 	border-radius: 50%;
 }
@@ -173,10 +183,41 @@ input {
 
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
-	top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
+	top: 7.5px;
+	left: 7.5px;
+	width: 5px;
+	height: 5px;
 	border-radius: 50%;
 	background: white;
+}
+
+
+
+/*The country picker*/
+
+.demo-non-form {
+    color: initial;
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-family: arial, verdana, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+}
+
+.demo-container {
+    padding: 0 1em;
+}
+
+.external-container {
+    display: flex;
+}
+
+.external-container button.external-button {
+    font-weight: 400;
+    padding: 10px;
+    margin: 6px 0 12px 16px;
 }

@@ -4,11 +4,19 @@
 <meta charset="ISO-8859-1">
 <title>registration form</title>
 <link rel="stylesheet" href="registrationForm.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
 <body>
+<h1>REGISTRATION FORM</h1>
 	<div id="registration">
-		<h1>REGISTRATION FORM</h1>
-		<form id="modulo" method="post" name="modulo">
+	
+		<div class="progress">
+  			<div id="fillingBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+		</div>
+		
+		<form  id="modulo" method="post" name="modulo">
 			<div class="passwordWithPic">
 				<input placeholder="Name" type="text" name="name" id="name"
 					autocomplete="off" onblur="addBorderForValidity('name')" onfocus="checkIfAlreadyValid('name')" required>
@@ -26,6 +34,11 @@
 				<input placeholder="Place of birth" type="text" name="placeOfBirth"
 					onfocus="checkIfAlreadyValid('placeOfBirth')" id="placeOfBirth" autocomplete="off" onblur="addBorderForValidity('placeOfBirth')" required>
 			</div>
+			
+			<div class="passwordWithPic">
+				<input placeholder="Country" type="text" name="country"
+					onfocus="checkIfAlreadyValid('country')" id="country" autocomplete="off" onblur="addBorderForValidity('country')" required>
+			</div>
 
 			<!-- The radio buttons -->
 			<div class="radios">
@@ -35,6 +48,11 @@
 				</label> <label class="container"> Female <input id="femaleSex"
 					type="radio" name="radio"> <span class="checkmark"></span>
 				</label>
+			</div>
+			
+			<div class="passwordWithPic">
+				<input placeholder="Username" type="text" name="username" id="username"
+					autocomplete="off" onblur="addBorderForValidity('username')" onfocus="checkIfAlreadyValid('username')" required>
 			</div>
 
 			<div class="passwordWithPic">
@@ -57,15 +75,41 @@
 				<input value="CODICE FISCALE (automatico)" type="text"
 					name="fiscalCode" id="fiscalCode" readonly>
 			</div>
-				<input id="forButton" type="submit" name="sendForm" value="Send form">
-				<button id="forButton" name="calculateCF" value="Calculate CF"
-					onclick="CalcolaCFOnClick()"></button>
+				<input id="forButton" type="button" name="sendForm" value="Send form" onclick="InviaForm()">
+				<input id="forButton" type="button" name="calculateCF" value="Calculate CF"
+					onclick="CalcolaCFOnClick()" onmouseover="onMouseOverButton()" onmouseout="onMouseOutButton()" >
+					<pippo id="pippo" hidden>true</pippo>
 		</form>
 	</div>
 
 
 	<script>
-	var validationNumber = 0;
+		function InviaForm()
+		{
+			var pippo = document.getElementById("pippo");
+			pippo.innerText="false";
+			var thereIsCF = document.getElementById("fiscalCode");
+			var cFResult = CalcolaCFOnClick();
+			if(thereIsCF.value=="CODICE FISCALE (automatico)" || cFResult!=thereIsCF.value)
+				{
+					var calculateCF = document.getElementsByName("calculateCF")[0];
+					alert('Calcola bene il CF con "Calculate CF" prima di inviare il form');
+					calculateCF.style.background="#4CAF50";
+					calculateCF.title="Click me :D";
+					calculateCF.style.color="white";
+					calculateCF.style.boxShadow= "0 10px 20px 0 rgba(0, 0, 0, 0.5), 0 8px 24px 0 rgba(0, 0, 0, 0.25)";
+					pippo.innerText="true";
+				}
+			else
+				{
+					var submit = document.getElementsByName("sendForm")[0];
+					if(submit.type=="button")
+						submit.type="submit";
+					submit.click();
+				}
+			pippo.innerText="true";
+		}
+	
 		function changeToDate() {
 			var inputToChange = document.getElementById("dateOfBirth");
 			if(inputToChange.type=="text")
@@ -93,27 +137,19 @@
 			var messaggioV = "Indispensabile per calcolo CF !";
 			if(elementTarget.value!=null && elementTarget.value!="")
 			{
-				if(elementTarget.checkValidity()==true)
-					{
-						if(elementTarget.isAlreadyValid==false)
-							validationNumber=validationNumber+1;
-					}
-				if(validationNumber==4)
-				{
-					var elementTarget = document.getElementsByName("calculateCF")[0];
-						alert("Edit the CF button with an animation");
-				}
 				elementTarget.setCustomValidity("");
 				elementTarget.style.border = "8px solid #008000";
 			}
 			else
 			{
-				if(elementTarget.checkValidity()==false)
-				{
-					if(elementTarget.isAlreadyValid==true)
-						validationNumber=validationNumber-1;
-				}
-				elementTarget.setCustomValidity(messaggioV);
+				if(element="country")
+					{
+						elementTarget.setCustomValidity("Il paese è importante!");
+					}
+				else
+					{
+						elementTarget.setCustomValidity(messaggioV);
+					}
 				elementTarget.style.border = "8px solid #FF0000";
 			}
 		}
@@ -149,11 +185,34 @@
 			}
 		}
 
+		
+		function onMouseOverButton()
+		{
+			var cfOver = document.getElementsByName("calculateCF")[0];
+			cfOver.style.backgroundColor = "#4CAF50";
+			cfOver.style.color="white";
+			cfOver.style.boxShadow="0 10px 20px 0 rgba(0, 0, 0, 0.5), 0 8px 24px 0 rgba(0, 0, 0, 0.25)";
+		}
+		
+		function onMouseOutButton()
+		{
+			var cfOver = document.getElementsByName("calculateCF")[0];
+			cfOver.style.backgroundColor = "#dddddd";
+			cfOver.style.color="black";
+			cfOver.style.boxShadow="none";
+		}
 			
 		
 		function CalcolaCFOnClick()
 		{		
-			
+			if(document.getElementById("pippo").innerText=="true")
+				{
+				var calculateCF = document.getElementsByName("calculateCF")[0];
+				calculateCF.style.background="#dddddd";
+				calculateCF.title="";
+				calculateCF.style.boxShadow= "none";
+				calculateCF.style.color="black";
+				}
 			//Calcolo codice fiscale
 			var CFisc={}
 
@@ -267,8 +326,20 @@
 			}
 
 			CFisc.calcola_codice_comune=function(pattern_comune){
-			  if(pattern_comune.match(/^[A-Z]\d\d\d$/i)) return pattern_comune;
-			  return this.trova_comune(pattern_comune)[0][1];
+			var plElement = document.getElementById("placeOfBirth");
+			this.trova_comune(pattern_comune);
+			  if(pattern_comune==""||this.trova_comune(pattern_comune)[0]==null) 
+				  {
+					var messaggio = "Comune sconosciuto";
+					plElement.setCustomValidity(messaggio);
+					plElement.style.border = "8px solid #FF0000";
+					return "ERROR";
+				}
+				else{
+					plElement.setCustomValidity("");
+					plElement.style.border = "8px solid #008000";
+					return this.trova_comune(pattern_comune)[0][1];
+				  }
 			}
 
 			CFisc.calcola_codice=function(nome,cognome,sesso,giorno,mese,anno,luogo)
@@ -8399,8 +8470,51 @@
 		    sesso,
 		    data[0],data[1],data[2],
 		    document.getElementById("modulo").placeOfBirth.value);
-		  	document.getElementById("modulo").fiscalCode.value=codice.toUpperCase();
+		  	if(document.getElementById("pippo").innerText=="true")
+		  	{
+		  		if((!(codice.toUpperCase().includes("ERROR")))&&(!document.getElementById("modulo").name.value=="")
+		  				&&(!document.getElementById("modulo").surname.value=="")
+		  				&&(!document.getElementById("modulo").dateOfBirth.value=="")
+		  				&&(!document.getElementById("modulo").placeOfBirth.value==""))
+		  			writeInFiscalCode(codice.toUpperCase());
+		  		else
+		  			{
+		  				var datiDaCompilare="";
+		  				
+		  				if(document.getElementById("modulo").name.value=="")
+		  				{
+	  						document.getElementById("modulo").name.style.border = "8px solid #FF0000";
+	  						datiDaCompilare+="\n * Nome";
+	  					}
+		  				if(document.getElementById("modulo").surname.value=="")
+		  				{
+	  						document.getElementById("modulo").surname.style.border = "8px solid #FF0000";
+	  						datiDaCompilare+="\n * Cognome";
+	  					}
+		  				if(document.getElementById("modulo").dateOfBirth.value=="")
+		  				{
+	  						document.getElementById("modulo").dateOfBirth.style.border = "8px solid #FF0000";
+	  						datiDaCompilare+="\n * Data di nascita";
+	  					}
+		  				if(document.getElementById("modulo").placeOfBirth.value=="" || codice.toUpperCase().includes("ERROR"))
+	  					{
+	  						document.getElementById("modulo").placeOfBirth.style.border = "8px solid #FF0000";
+	  						datiDaCompilare+="\n * Luogo di nascita";
+	  						if(codice.toUpperCase().includes("ERROR")&&!document.getElementById("modulo").placeOfBirth.value=="")
+	  							datiDaCompilare+=": COMUNE SCONOSCIUTO!";
+	  					}
+		  				alert("Compila i dati necessari per il CF"+datiDaCompilare);
+		  			}
+		  	}
+		  			
+		  	return codice.toUpperCase();
 		}
+		
+		function writeInFiscalCode(toWrite)
+		{
+			document.getElementById("modulo").fiscalCode.value= toWrite;
+		}
+		
 	</script>
 </body>
 </html>
