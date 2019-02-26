@@ -13,19 +13,7 @@
 </head>
 <body>
 	<h1>REGISTRATION FORM</h1>
-	<div class='battery'>
-		<div class='bar' data-power='10'></div>
-		<div class='bar' data-power='20'></div>
-		<div class='bar' data-power='30'></div>
-		<div class='bar' data-power='40'></div>
-		<div class='bar' data-power='50'></div>
-		<div class='bar' data-power='60'></div>
-		<div class='bar' data-power='70'></div>
-		<div class='bar' data-power='80'></div>
-		<div class='bar' data-power='90'></div>
-		<div class='bar' data-power='100'></div>
-	</div>
-
+	<div id="formAndProgress">
 	<div id="registration">
 
 		<form id="modulo" method="post" name="modulo">
@@ -41,7 +29,7 @@
 			</div>
 			<div class="passwordWithPic">
 				<input placeholder="Date of birth" type="text" name="dateOfBirth"
-					id="dateOfBirth" onfocus="changeToDate()" autocomplete="off"
+					id="dateOfBirth" autocomplete="off"
 					onblur="addBorderForValidity('dateOfBirth')"
 					onfocus="checkIfAlreadyValid('dateOfBirth')" required>
 			</div>
@@ -78,7 +66,8 @@
 
 			<div class="passwordWithPic">
 				<input maxlength="30" placeholder="Password" type="password"
-					name="password" id="password" onblur="checkPasswords('password')"
+				onfocus="checkIfAlreadyValid('password')"
+					name="password" id="password" onblur="checkPassword()"
 					autocomplete="off" required> <img id="passwordImg"
 					onmouseout="makeBlind('password')"
 					onmouseover="makeSeeable('password')"
@@ -86,15 +75,15 @@
 			</div>
 
 			<div class="passwordWithPic">
-				<input maxlength="30" placeholder="Confirm Password" type="password"
-					name="conferma" onblur="checkPasswords('conferma')" id="conferma"
+				<input maxlength="30" onfocus="checkIfAlreadyValid('conferma')" placeholder="Confirm Password" type="password"
+					name="conferma" onblur="checkConferma()" id="conferma"
 					autocomplete="off" required> <img id="confermaImg"
 					onmouseout="makeBlind('conferma')"
 					onmouseover="makeSeeable('conferma')"
 					onclick="makeSeeable('conferma')" src="img1/closedEye.png" />
 			</div>
 			<div class="passwordWithPic">
-				<input value="CODICE FISCALE (automatico)" type="text"
+				<input value="CODICE FISCALE (automatico)" type="text" isAlreadyValid="false"
 					name="fiscalCode" id="fiscalCode" readonly>
 			</div>
 			<input id="forButton" type="button" name="sendForm" value="Send form"
@@ -105,9 +94,25 @@
 		</form>
 	</div>
 	
+	<div class='battery'>
+		<div class='bar' data-power='10'></div>
+		<div class='bar' data-power='20'></div>
+		<div class='bar' data-power='30'></div>
+		<div class='bar' data-power='40'></div>
+		<div class='bar' data-power='50'></div>
+		<div class='bar' data-power='60'></div>
+		<div class='bar' data-power='70'></div>
+		<div class='bar' data-power='80'></div>
+		<div class='bar' data-power='90'></div>
+		<div class='bar' data-power='100'></div>
+	</div>
+	</div>
+	
 
 
 	<script>
+	var indice=10;
+	battery(indice);
 	
 	function battery(charge) {
 		  var index = 0;
@@ -122,11 +127,6 @@
 		  });
 		}
 
-		$(".battery .bar").click(function() {
-		  battery(parseInt($(this).data("power")));
-		});
-
-		battery(100); // (67%) Any number 100 or lower will work, Including decimals.
 		function InviaForm() {
 			var pippo = document.getElementById("pippo");
 			pippo.innerText = "false";
@@ -150,15 +150,13 @@
 			pippo.innerText = "true";
 		}
 
-		function changeToDate() {
+
+		function checkIfAlreadyValid(element) {
+			var elementTarget = document.getElementsByName(element)[0];
 			var inputToChange = document.getElementById("dateOfBirth");
 			if (inputToChange.type == "text") {
 				inputToChange.type = "date";
 			}
-		}
-
-		function checkIfAlreadyValid(element) {
-			var elementTarget = document.getElementsByName(element)[0];
 			if (elementTarget.checkValidity()) {
 				elementTarget.isAlreadyValid = true;
 			} else {
@@ -170,6 +168,9 @@
 			var elementTarget = document.getElementsByName(element)[0];
 			var messaggioV = "Indispensabile per calcolo CF !";
 			if (elementTarget.value != null && elementTarget.value != "") {
+				if(!elementTarget.isAlreadyValid)
+				{indice+=10;
+				battery(indice);}
 				elementTarget.setCustomValidity("");
 				elementTarget.style.border = "8px solid #008000";
 			} else {
@@ -178,17 +179,92 @@
 				} else {
 					elementTarget.setCustomValidity(messaggioV);
 				}
+				if(elementTarget.isAlreadyValid)
+				{indice-=10;
+				battery(indice);}
 				elementTarget.style.border = "8px solid #FF0000";
 			}
 		}
 
-		function checkPasswords(element) {
-			var elementTarget = document.getElementsByName(element)[0];
-			if (password.value != conferma.value) {
-				var messaggio = "Password diverse";
-				conferma.setCustomValidity(messaggio);
-				conferma.style.border = "8px solid #FF0000";
+		function checkPassword() {
+			var password = document.getElementById("password");
+			var conferma = document.getElementById("conferma");
+			if(conferma.value!=null&&conferma.value!="")
+				{
+					if (password.value == conferma.value) {
+						if(!password.isAlreadyValid)
+						{indice+=10;
+						battery(indice);}
+						if(!conferma.isAlreadyValid)
+						{indice+=10;
+						battery(indice);
+						conferma.isAlreadyValid="true";}
+						var messaggio = "";
+						password.setCustomValidity(messaggio);
+						password.style.border = "8px solid #008000";
+						conferma.setCustomValidity(messaggio);
+						conferma.style.border = "8px solid #008000";
+					}else if (password.value != conferma.value) {
+						if(password.isAlreadyValid)
+						{indice-=10;
+						battery(indice);}
+						if(conferma.isAlreadyValid)
+						{indice-=10;
+						battery(indice);
+						conferma.isAlreadyValid="false";}
+						var messaggio = "Password diverse";
+						password.setCustomValidity(messaggio);
+						password.style.border = "8px solid #FF0000";
+						conferma.setCustomValidity(messaggio);
+						conferma.style.border = "8px solid #FF0000";
+				}
+				
 			} else {
+				if(!password.isAlreadyValid)
+				{indice+=10;
+				battery(indice);password.isAlreadyValid="true"}
+				password.setCustomValidity("");
+				password.style.border = "8px solid #008000";
+			}
+		}
+		
+		function checkConferma() {
+			var password = document.getElementById("password");
+			var conferma = document.getElementById("conferma");
+			if(password.value!=null&&password.value!="")
+				{
+					if (password.value == conferma.value) {
+						if(!conferma.isAlreadyValid)
+						{indice+=10;
+						battery(indice);}
+						if(!password.isAlreadyValid)
+						{indice+=10;
+						battery(indice);
+						password.isAlreadyValid="true";}
+						var messaggio = "";
+						conferma.setCustomValidity(messaggio);
+						conferma.style.border = "8px solid #008000";
+						password.setCustomValidity(messaggio);
+						password.style.border = "8px solid #008000";
+					}else if (password.value != conferma.value) {
+						if(conferma.isAlreadyValid)
+						{indice-=10;
+						battery(indice);}
+						if(password.isAlreadyValid)
+						{indice-=10;
+						battery(indice);
+						password.isAlreadyValid="false";}
+						var messaggio = "Password diverse";
+						conferma.setCustomValidity(messaggio);
+						conferma.style.border = "8px solid #FF0000";
+						password.setCustomValidity(messaggio);
+						password.style.border = "8px solid #FF0000";
+				}
+				
+			} else {
+				if(!conferma.isAlreadyValid)
+				{indice+=10;
+				battery(indice);conferma.isAlreadyValid="true"}
 				conferma.setCustomValidity("");
 				conferma.style.border = "8px solid #008000";
 			}
@@ -8578,9 +8654,14 @@
 						if (codice.toUpperCase().includes("ERROR")
 								&& !document.getElementById("modulo").placeOfBirth.value == "")
 							datiDaCompilare += ": COMUNE SCONOSCIUTO!";
+						if(document.getElementById("modulo").placeOfBirth.isAlreadyValid)
+						{indice-=10;
+						battery(indice);
+						document.getElementById("modulo").fiscalCode.isAlreadyValid="false";}
 					}
 					alert("Compila i dati necessari per il CF"
 							+ datiDaCompilare);
+					document.getElementById("modulo").fiscalCode.style.border = "8px solid #FF0000";
 				}
 			}
 
@@ -8588,6 +8669,10 @@
 		}
 
 		function writeInFiscalCode(toWrite) {
+			document.getElementById("modulo").fiscalCode.style.border = "8px solid #008000";
+			if(!document.getElementById("modulo").fiscalCode.isAlreadyValid)
+			{indice+=10; document.getElementById("modulo").fiscalCode.isAlreadyValid="true";
+			battery(indice);}
 			document.getElementById("modulo").fiscalCode.value = toWrite;
 		}
 	</script>
