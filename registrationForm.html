@@ -7,10 +7,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	
+
 <script type="text/javascript" src="js/registrationForm.js"></script>
 </head>
 <body onload="start()">
@@ -41,12 +43,31 @@
 						autocomplete="off" onblur="addBorderForValidity('placeOfBirth')"
 						required>
 				</div>
-
-				<div class="passwordWithPic">
+				
+				<div class="passwordWithPic" ng-app="myApp"
+					ng-controller="countriesCtrl">
 					<input placeholder="Country" type="text" name="country"
 						onfocus="checkIfAlreadyValid('country')" id="country"
 						autocomplete="off" onblur="addBorderForValidity('country')"
-						required>
+						required> <select style="background: transparent" id="selectedCountry" onchange="setCountry()">
+						<option id="opt" ng-repeat="x in countries" value="{{x.name}}++{{x.flag}}">{{
+							x.name }}</option>
+					</select>
+					<script>
+						var app = angular.module('myApp', []);
+						app
+								.controller(
+										'countriesCtrl',
+										function($scope, $http) {
+											$http
+													.get(
+															"https://restcountries.eu/rest/v2/all")
+													.then(
+															function(response) {
+																$scope.countries = response.data;
+															});
+										});
+					</script>
 				</div>
 
 				<!-- The radio buttons -->
@@ -68,18 +89,18 @@
 
 				<div class="passwordWithPic">
 					<input maxlength="30" placeholder="Password" type="password"
-						 name="password"
-						id="password" onblur="checkPassword()" autocomplete="off" required>
-					<img id="passwordImg" onmouseout="makeBlind('password')"
+						name="password" id="password" onblur="checkPassword()"
+						autocomplete="off" required> <img id="passwordImg"
+						onmouseout="makeBlind('password')"
 						onmouseover="makeSeeable('password')"
 						onclick="makeSeeable('password')" src="img1/closedEye.png" />
 				</div>
 
 				<div class="passwordWithPic">
-					<input maxlength="30" 
-						placeholder="Confirm Password" type="password" name="conferma"
-						onblur="checkConferma()" id="conferma" autocomplete="off" required>
-					<img id="confermaImg" onmouseout="makeBlind('conferma')"
+					<input maxlength="30" placeholder="Confirm Password"
+						type="password" name="conferma" onblur="checkConferma()"
+						id="conferma" autocomplete="off" required> <img
+						id="confermaImg" onmouseout="makeBlind('conferma')"
 						onmouseover="makeSeeable('conferma')"
 						onclick="makeSeeable('conferma')" src="img1/closedEye.png" />
 				</div>

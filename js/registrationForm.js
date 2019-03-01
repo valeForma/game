@@ -1,5 +1,25 @@
 var indice;
 
+function setCountry()
+{
+	var selected = document.getElementById("selectedCountry");
+	var countryToFill = document.getElementById("country");
+	var countryNameSelected = selected.value.substring(0,selected.value.indexOf("+"));
+	var imageSourceFlag = selected.value.substring(selected.value.indexOf("+")+2)
+	countryToFill.style.backgroundImage = "url(" + imageSourceFlag+")";
+	countryToFill.style.backgroundSize = "100% 100%";
+	if(imageSourceFlag=="https://restcountries.eu/data/ita.svg")
+		countryToFill.style.backgroundSize = "cover";
+
+//	countryToFill.style.backgroundSize = String(countryToFill.offsetWidth)+"px "+String(countryToFill.offsetHeight)+"px";
+	checkIfAlreadyValid("country");
+	countryToFill.value=countryNameSelected;
+	countryToFill.style.color="rgba(0,0,0,0)";
+	countryToFill.style.backgroundColor ="black";
+	addBorderForValidity('country');
+}
+
+
 function start() {
 	indice = 10;
 	battery(indice);

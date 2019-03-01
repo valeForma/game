@@ -41,7 +41,7 @@
 
 body,html {
 	min-width: 580px!important;
-	background-image: url("img1/sfondo8.jpg");
+	background-image: url("img1/backgroundForm.jpg");
 	font-weight: bold;
 	height: 100%;
 	margin:0;
@@ -97,6 +97,23 @@ input {
 	border: none;
 }
 
+select
+{
+	background: #FFF;
+	display: block;
+	width: 20%;
+	height: 3em;
+	box-sizing: border-box; border:none;
+	position: absolute;
+	top: 25%;
+	right: 8%;
+	width: 1em;
+	color:green;
+		border-radius: 50px;
+}
+
+
+
 .passwordWithPic input {
 	background: #FFF;
 	display: block;
@@ -104,11 +121,19 @@ input {
 	height: 6em;
 	box-sizing: border-box;
 }
-.passwordWithPic input:hover{
-	background: #000;
-	color: white;
-}
 
+select:hover{
+	background: transparent;
+	color: green;
+}
+.passwordWithPic input:hover{
+	background: transparent;
+	color: black;
+}
+select:focus{
+	background: transparent;
+	color: green; border:none;
+}
 .passwordWithPic input:focus {
 	background: #000;
 	color: white;
@@ -256,6 +281,7 @@ input {
   background: #FFF;
 }
 
+/*Blocchi non visibili*/
 .bar {
   cursor: pointer;
   display: inline-block;
@@ -266,7 +292,7 @@ input {
   background: transparent;
   transition: background 1s;
 }
-
+/*Bloccji attivi e visibili*/
 .bar.active {
 	height:7em;
   background: limegreen;
