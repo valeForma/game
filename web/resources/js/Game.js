@@ -167,7 +167,7 @@ function setGame() {
     document.getElementById('gameStatus').hidden=true;
 
     clearAll();
-    playground = new Playground(playgroundX ,playgroundY);
+    playground = new Playground(playgroundX ,playgroundY,imgPath);
     if(player===null) {
         player = new Player(0, 0, 3);
     }else{
