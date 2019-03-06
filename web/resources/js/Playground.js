@@ -1,9 +1,10 @@
 class Playground {
 
-    constructor( x , y){
+    constructor( x , y,imgPath){
         this.x=x;
         this.y=y;
         this.matrix = [];
+        this.imgPath=imgPath;
         this.backgroundDefault = imgPath+'bg.png';
      
     }
