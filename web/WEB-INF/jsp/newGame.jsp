@@ -222,7 +222,7 @@
     </div>
     <div class="row">
 
-        <div class="col-lg-12 col-12 offset-lg-2 my-lg-000000000000 watch" id="root">
+        <div class="col-lg-12 col-12 offset-lg-2 my-lg-0 watch" id="root">
 
 
             <script type="text/babel">
